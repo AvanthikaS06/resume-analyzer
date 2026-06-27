@@ -7,7 +7,6 @@ from utils.pdf_parser import extract_text_from_pdf
 from utils.skill_extractor import load_skills, extract_skills
 from utils.scorer import calculate_match_score
 from utils.ats_checker import check_ats_score
-from utils.ai_suggester import get_ai_suggestions
 
 # ── Page Config ──────────────────────────────────────────
 st.set_page_config(
@@ -31,7 +30,7 @@ with col2:
     jd_text = st.text_area("Job Description", height=250,
                             placeholder="Paste the full job description here...")
 
-use_ai = st.checkbox("🤖 Enable AI Suggestions (requires OpenAI key)", value=True)
+
 analyze_btn = st.button("🔍 Analyze Resume", use_container_width=True, type="primary")
 
 # ── Analysis ──────────────────────────────────────────────
@@ -116,15 +115,7 @@ if analyze_btn:
 
         st.divider()
 
-        # ── AI Suggestions ────────────────────────────────
-        if use_ai:
-            st.subheader("🤖 AI Suggestions")
-            with st.spinner("Getting AI feedback..."):
-                try:
-                    suggestions = get_ai_suggestions(resume_text, jd_text)
-                    st.markdown(suggestions)
-                except Exception as e:
-                    st.warning(f"AI suggestions unavailable: {e}")
+
 
         # ── Raw Resume Text ───────────────────────────────
         with st.expander("📃 View Extracted Resume Text"):
